@@ -17,7 +17,7 @@ const detailSchema = Schema(
     status: {
       type: String,
       required: [true, 'Status of task is required'],
-      enum: ['todo', 'in progress', 'done'],
+      enum: ['todo', 'in progress', 'done', 'archived'],
     },
   },
   { versionKey: false, timestamps: true },
@@ -26,11 +26,20 @@ const detailSchema = Schema(
 const Detail = model('detail', detailSchema); //название - существительное в единственном числе с большой буквы
 
 const detailAddSchema = Joi.object({
+  boardId: Joi.string().required(),
   name: Joi.string().required(),
-  status: Joi.string().valid('todo', 'in progress', 'done').required(),
+  status: Joi.string().valid('todo', 'in progress', 'done', 'archived').required(),
+});
+
+const detailUpdateSchema = Joi.object({
+  name: Joi.string(),
+  status: Joi.string().valid('todo', 'in progress', 'done', 'archived'),
 });
 
 module.exports = {
   Detail,
-  schemas: { detailAddSchema },
+  schemas: {
+    detailAddSchema,
+    detailUpdateSchema,
+  },
 };

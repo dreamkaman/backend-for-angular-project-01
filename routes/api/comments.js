@@ -4,7 +4,7 @@ const router = express.Router();
 
 const createError = require('http-errors');
 
-const { Detail, schemas } = require('../../models/detail');
+const { Comment, schemas } = require('../../models/comment');
 
 const { authenticate } = require('../../middlewares/index');
 
@@ -16,9 +16,9 @@ const { authenticate } = require('../../middlewares/index');
 
 router.get('/', authenticate, async (req, res, next) => {
   try {
-    const { boardId } = req.body;
+    const { commentId } = req.body;
 
-    const result = await Detail.find({ boardId }, '-createdAt -updatedAt');
+    const result = await Comment.find({ commentId }, '-createdAt -updatedAt');
 
     res.json(result);
   } catch (error) {
@@ -28,9 +28,7 @@ router.get('/', authenticate, async (req, res, next) => {
 
 router.post('/', authenticate, async (req, res, next) => {
   try {
-    console.log(req.body);
-
-    const { error } = schemas.detailAddSchema.validate(req.body);
+    const { error } = schemas.commentAddSchema.validate(req.body);
 
     if (error) {
       throw createError(400, 'missing required name field');
@@ -38,7 +36,7 @@ router.post('/', authenticate, async (req, res, next) => {
 
     const data = { ...req.body };
 
-    const result = await Detail.create(data);
+    const result = await Comment.create(data);
 
     res.status(201).json(result);
   } catch (error) {
@@ -49,38 +47,37 @@ router.post('/', authenticate, async (req, res, next) => {
   }
 });
 
-router.delete('/:detailId', authenticate, async (req, res, next) => {
+router.delete('/:commentId', authenticate, async (req, res, next) => {
   try {
-    const { detailId } = req.params;
+    const { commentId } = req.params;
 
     // const { _id: id } = req.user;
 
-    const result = await Detail.findByIdAndDelete(detailId);
-    // const result = await Detail.findOneAndDelete({ _id: detailId, owner: { _id: id } });
+    const result = await Comment.findByIdAndDelete(commentId);
 
     if (!result) {
       throw createError(404, 'Not found');
     }
 
-    res.json({ message: 'Detail deleted' });
+    res.json({ message: 'Comment deleted' });
   } catch (error) {
     next(error);
   }
 });
 
-router.patch('/:detailId', async (req, res, next) => {
+router.patch('/:commentId', async (req, res, next) => {
   try {
-    const { detailId } = req.params;
+    const { commentId } = req.params;
 
     const body = req.body;
 
-    const { error } = schemas.detailUpdateSchema.validate(body);
+    const { error } = schemas.commentUpdateSchema.validate(body);
 
     if (error) {
       throw createError(400, 'Validation error');
     }
 
-    const result = await Detail.findByIdAndUpdate(detailId, body, { new: true });
+    const result = await Comment.findByIdAndUpdate(commentId, body, { new: true });
     if (!result) {
       throw createError(404, 'Not found');
     }
