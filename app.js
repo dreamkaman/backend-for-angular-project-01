@@ -10,6 +10,8 @@ const boardsRouter = require('./routes/api/boards');
 const detailsRouter = require('./routes/api/details');
 const commentsRouter = require('./routes/api/comments');
 
+const { authenticate, checkBoard, checkDetail } = require('./middlewares');
+
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -19,10 +21,18 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/boards', boardsRouter);
-app.use('/api/details', detailsRouter);
-app.use('/api/comments', commentsRouter);
+app.use('/api/users', authenticate, usersRouter);
+app.use('/api/boards', authenticate, boardsRouter);
+
+app.use('/api/boards/:boardId/details', authenticate, checkBoard, detailsRouter);
+
+app.use(
+  '/api/boards/:boardId/details/:detailId/comments',
+  authenticate,
+  checkBoard,
+  checkDetail,
+  commentsRouter,
+);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });

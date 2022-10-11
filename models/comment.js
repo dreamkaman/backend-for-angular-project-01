@@ -21,7 +21,6 @@ const commentSchema = Schema(
 const Comment = model('comment', commentSchema); //название - существительное в единственном числе с большой буквы
 
 const commentAddSchema = Joi.object({
-  detailId: Joi.string().required(),
   text: Joi.string().required(),
 });
 

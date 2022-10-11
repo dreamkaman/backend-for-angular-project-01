@@ -26,7 +26,6 @@ const detailSchema = Schema(
 const Detail = model('detail', detailSchema); //название - существительное в единственном числе с большой буквы
 
 const detailAddSchema = Joi.object({
-  boardId: Joi.string().required(),
   name: Joi.string().required(),
   status: Joi.string().valid('todo', 'in progress', 'done', 'archived').required(),
 });

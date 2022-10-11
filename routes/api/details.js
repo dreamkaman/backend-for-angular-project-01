@@ -6,17 +6,11 @@ const createError = require('http-errors');
 
 const { Detail, schemas } = require('../../models/detail');
 
-const { authenticate } = require('../../middlewares/index');
+// const { authenticate } = require('../../middlewares/index');
 
-// Example of body: {
-//   "boardId": "",
-//   "name": "",
-//   "status":"";
-// }
-
-router.get('/', authenticate, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const { boardId } = req.body;
+    const { boardId } = req.user;
 
     const result = await Detail.find({ boardId }, '-createdAt -updatedAt');
 
@@ -26,9 +20,9 @@ router.get('/', authenticate, async (req, res, next) => {
   }
 });
 
-router.post('/', authenticate, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    console.log(req.body);
+    const { boardId } = req.user;
 
     const { error } = schemas.detailAddSchema.validate(req.body);
 
@@ -36,7 +30,7 @@ router.post('/', authenticate, async (req, res, next) => {
       throw createError(400, 'missing required name field');
     }
 
-    const data = { ...req.body };
+    const data = { ...req.body, boardId };
 
     const result = await Detail.create(data);
 
@@ -49,13 +43,15 @@ router.post('/', authenticate, async (req, res, next) => {
   }
 });
 
-router.delete('/:detailId', authenticate, async (req, res, next) => {
+router.delete('/:detailId', async (req, res, next) => {
   try {
+    const { boardId } = req.user;
+
     const { detailId } = req.params;
 
     // const { _id: id } = req.user;
 
-    const result = await Detail.findByIdAndDelete(detailId);
+    const result = await Detail.findOneAndDelete({ boardId, detailId });
     // const result = await Detail.findOneAndDelete({ _id: detailId, owner: { _id: id } });
 
     if (!result) {
@@ -72,15 +68,17 @@ router.patch('/:detailId', async (req, res, next) => {
   try {
     const { detailId } = req.params;
 
+    const { boardId } = req.user;
+
     const body = req.body;
 
-    const { error } = schemas.detailUpdateSchema.validate(body);
+    const { error } = await schemas.detailUpdateSchema.validateAsync(body); //just try and
 
     if (error) {
       throw createError(400, 'Validation error');
     }
 
-    const result = await Detail.findByIdAndUpdate(detailId, body, { new: true });
+    const result = await Detail.findOneAndUpdate({ boardId, detailId }, body, { new: true });
     if (!result) {
       throw createError(404, 'Not found');
     }

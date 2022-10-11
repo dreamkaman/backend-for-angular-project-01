@@ -1,5 +1,9 @@
-const authenticate = require("./authenticate");
+const authenticate = require('./authenticate');
+const checkBoard = require('./checkBoard');
+const checkDetail = require('./checkDetail');
 
 module.exports = {
-    authenticate,
-}
+  authenticate,
+  checkBoard,
+  checkDetail,
+};

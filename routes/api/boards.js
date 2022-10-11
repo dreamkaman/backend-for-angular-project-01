@@ -6,9 +6,7 @@ const createError = require('http-errors');
 
 const { Board, schemas } = require('../../models/board');
 
-const { authenticate } = require('../../middlewares/index');
-
-router.get('/', authenticate, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const { _id } = req.user;
 
@@ -29,7 +27,7 @@ router.get('/', authenticate, async (req, res, next) => {
   }
 });
 
-router.get('/:boardId', authenticate, async (req, res, next) => {
+router.get('/:boardId', async (req, res, next) => {
   try {
     const { boardId } = req.params;
 
@@ -50,9 +48,9 @@ router.get('/:boardId', authenticate, async (req, res, next) => {
   }
 });
 
-router.post('/', authenticate, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    const { error } = schemas.boardAddSchema.validate(req.body);
+    const { error } = await schemas.boardAddSchema.validateAsync(req.body);
 
     if (error) {
       throw createError(400, 'missing required name field');
@@ -73,7 +71,7 @@ router.post('/', authenticate, async (req, res, next) => {
   }
 });
 
-router.delete('/:boardId', authenticate, async (req, res, next) => {
+router.delete('/:boardId', async (req, res, next) => {
   try {
     const { boardId } = req.params;
 
@@ -97,7 +95,7 @@ router.patch('/:boardId', async (req, res, next) => {
 
     const body = req.body;
 
-    const { error } = schemas.boardUpdateSchema.validate(body);
+    const { error } = await schemas.boardUpdateSchema.validateAsync(body);
 
     if (error) {
       throw createError(400, 'Validation error');
