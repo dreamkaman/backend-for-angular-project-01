@@ -1,4 +1,4 @@
-const checkDetail = async (req, res, next) => {
+const addDetailId = async (req, res, next) => {
   try {
     const { detailId } = req.params;
 
@@ -15,4 +15,4 @@ const checkDetail = async (req, res, next) => {
   }
 };
 
-module.exports = checkDetail;
+module.exports = addDetailId;

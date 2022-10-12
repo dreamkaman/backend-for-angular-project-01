@@ -10,7 +10,7 @@ const boardsRouter = require('./routes/api/boards');
 const detailsRouter = require('./routes/api/details');
 const commentsRouter = require('./routes/api/comments');
 
-const { authenticate, checkBoard, checkDetail } = require('./middlewares');
+const { authenticate, addBoardId, addDetailId } = require('./middlewares');
 
 const app = express();
 
@@ -24,13 +24,13 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', authenticate, usersRouter);
 app.use('/api/boards', authenticate, boardsRouter);
 
-app.use('/api/boards/:boardId/details', authenticate, checkBoard, detailsRouter);
+app.use('/api/boards/:boardId/details', authenticate, addBoardId, detailsRouter);
 
 app.use(
   '/api/boards/:boardId/details/:detailId/comments',
   authenticate,
-  checkBoard,
-  checkDetail,
+  addBoardId,
+  addDetailId,
   commentsRouter,
 );
 

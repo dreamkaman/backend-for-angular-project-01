@@ -1,4 +1,4 @@
-const checkBoard = async (req, res, next) => {
+const addBoardId = async (req, res, next) => {
   try {
     const { boardId } = req.params;
 
@@ -15,4 +15,4 @@ const checkBoard = async (req, res, next) => {
   }
 };
 
-module.exports = checkBoard;
+module.exports = addBoardId;

@@ -1,9 +1,9 @@
 const authenticate = require('./authenticate');
-const checkBoard = require('./checkBoard');
-const checkDetail = require('./checkDetail');
+const addBoardId = require('./addBoardId');
+const addDetailId = require('./addDetailId');
 
 module.exports = {
   authenticate,
-  checkBoard,
-  checkDetail,
+  addBoardId,
+  addDetailId,
 };
