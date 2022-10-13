@@ -46,7 +46,6 @@ router.delete('/:commentId', async (req, res, next) => {
     const { commentId } = req.params;
 
     const { detailId } = req.user;
-    // const { _id: id } = req.user;
 
     const result = await Comment.findOneAndDelete({ detailId, commentId });
 
