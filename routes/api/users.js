@@ -4,7 +4,7 @@ const router = express.Router();
 
 const { User } = require('../../models/user');
 
-const { authenticate } = require('../../middlewares/index');
+// const { authenticate } = require('../../middlewares/index');
 
 router.get('/current', async (req, res, next) => {
   res.json({
