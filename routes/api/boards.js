@@ -10,16 +10,7 @@ router.get('/', async (req, res, next) => {
   try {
     const { _id } = req.user;
 
-    const { page = 1, limit = 20 } = req.query;
-
-    const skip = (page - 1) * limit;
-
-    const limitNum = Number(limit); //skip,limit must be numbers
-
-    const result = await Board.find({ owner: _id }, '-createdAt -updatedAt', {
-      skip,
-      limit: limitNum,
-    });
+    const result = await Board.find({ owner: _id }, '-createdAt -updatedAt');
 
     res.json(result);
   } catch (error) {
