@@ -6,8 +6,6 @@ const createError = require('http-errors');
 
 const { Detail, schemas } = require('../../models/detail');
 
-// const { authenticate } = require('../../middlewares/index');
-
 router.get('/', async (req, res, next) => {
   try {
     const { boardId } = req.user;
