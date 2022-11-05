@@ -4,7 +4,7 @@ const router = express.Router();
 
 const createError = require('http-errors');
 
-const { Board, schemas } = require('../../models/board');
+const { Board, schemas } = require('../../models/boardModel');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -86,7 +86,11 @@ router.patch('/:boardId', async (req, res, next) => {
   try {
     const { boardId } = req.params;
 
-    const body = req.body;
+    // const body = req.body;
+
+    const { name, description } = req.body;
+
+    body = description ? { name, description } : { name };
 
     const { error } = await schemas.boardUpdateSchema.validateAsync(body);
 

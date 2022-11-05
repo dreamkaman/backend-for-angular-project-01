@@ -28,7 +28,7 @@ const Board = model('board', boardSchema); //название - существи
 
 const boardAddSchema = Joi.object({
   name: Joi.string().required(),
-  description: Joi.string().required(),
+  description: Joi.string(),
 });
 
 const boardUpdateSchema = Joi.object({

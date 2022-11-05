@@ -1,4 +1,4 @@
-const { Board } = require('../models/board');
+const { Board } = require('../models/boardModel');
 
 const createError = require('http-errors');
 

@@ -4,7 +4,7 @@ const router = express.Router();
 
 const createError = require('http-errors');
 
-const { Comment, schemas } = require('../../models/comment');
+const { Comment, schemas } = require('../../models/commentModel');
 
 router.get('/', async (req, res, next) => {
   try {

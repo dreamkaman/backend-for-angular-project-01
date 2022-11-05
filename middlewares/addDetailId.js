@@ -1,4 +1,4 @@
-const { Detail } = require('../models/detail');
+const { Detail } = require('../models/detailModel');
 
 const createError = require('http-errors');
 

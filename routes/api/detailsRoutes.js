@@ -4,7 +4,7 @@ const router = express.Router();
 
 const createError = require('http-errors');
 
-const { Detail, schemas } = require('../../models/detail');
+const { Detail, schemas } = require('../../models/detailModel');
 
 router.get('/', async (req, res, next) => {
   try {

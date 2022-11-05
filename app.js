@@ -4,13 +4,13 @@ const cors = require('cors');
 
 require('dotenv').config();
 
-const authRouter = require('./routes/api/auth');
-const usersRouter = require('./routes/api/users');
-const boardsRouter = require('./routes/api/boards');
-const detailsRouter = require('./routes/api/details');
-const commentsRouter = require('./routes/api/comments');
+const authRouter = require('./routes/api/authRoutes');
+const usersRouter = require('./routes/api/usersRoutes');
+const boardsRouter = require('./routes/api/boardsRoutes');
+const detailsRouter = require('./routes/api/detailsRoutes');
+const commentsRouter = require('./routes/api/commentsRoutes');
 
-const { authenticate, addBoardId, addDetailId } = require('./middlewares');
+const { authenticate, addBoardId, addDetailId } = require('./middleWares');
 
 const app = express();
 
