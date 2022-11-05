@@ -74,7 +74,9 @@ router.delete('/:boardId', async (req, res, next) => {
       throw createError(404, 'Not found');
     }
 
-    res.json({ message: 'board deleted' });
+    res.json({
+      boardId,
+    });
   } catch (error) {
     next(error);
   }
