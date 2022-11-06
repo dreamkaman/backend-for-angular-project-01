@@ -49,14 +49,17 @@ router.delete('/:detailId', async (req, res, next) => {
 
     // const { _id: id } = req.user;
 
-    const result = await Detail.findOneAndDelete({ boardId, detailId });
-    // const result = await Detail.findOneAndDelete({ _id: detailId, owner: { _id: id } });
+    // const result = await Detail.findOneAndDelete({ boardId, detailId });
+    const result = await Detail.findOneAndDelete({ _id: detailId, boardId });
+
+    console.log(result);
 
     if (!result) {
       throw createError(404, 'Not found');
     }
 
-    res.json({ message: 'Detail deleted' });
+    // res.json({ message: 'Detail deleted' });
+    res.json(result);
   } catch (error) {
     next(error);
   }
