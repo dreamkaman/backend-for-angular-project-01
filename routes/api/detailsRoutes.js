@@ -73,7 +73,8 @@ router.patch('/:detailId', async (req, res, next) => {
       throw createError(400, 'Validation error');
     }
 
-    const result = await Detail.findOneAndUpdate({ boardId, detailId }, body, { new: true });
+    //return old (not updated) detail!!!
+    const result = await Detail.findOneAndUpdate({ _id: detailId, boardId }, body);
     if (!result) {
       throw createError(404, 'Not found');
     }
