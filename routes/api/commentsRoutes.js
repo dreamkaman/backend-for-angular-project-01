@@ -53,7 +53,8 @@ router.delete('/:commentId', async (req, res, next) => {
       throw createError(404, 'Not found');
     }
 
-    res.json({ message: 'Comment deleted' });
+    // res.json({ message: 'Comment deleted' });
+    res.json(result);
   } catch (error) {
     next(error);
   }
